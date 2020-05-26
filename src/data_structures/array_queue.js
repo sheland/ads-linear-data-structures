@@ -1,6 +1,8 @@
 class ArrayQueue {
   constructor() {
     this.storage = [];
+
+    // pointers
     this.head = 0;
     this.tail = 0;
 
@@ -12,6 +14,7 @@ class ArrayQueue {
     const ticket = this.tail;
     this.storage[this.tail] = element;
     this.tail += 1;
+    // Return element just added to queue 
     return ticket;
   }
 
@@ -24,22 +27,24 @@ class ArrayQueue {
 
   dequeue() {
     // skip cancelled elements at the front of the queue
-    while (this.head < this.tail &&
-        this.storage[this.head] === undefined) {
+    while (this.head < this.tail && this.storage[this.head] === undefined) {
       this.head += 1;
       this.cancelCount -= 1;
     }
 
+    // if there's only one element in array
     if (this.head === this.tail) {
       return undefined;
     }
 
+    // mark first non-undefined element in array 
     const element = this.storage[this.head];
     this.storage[this.head] = undefined;
     this.head += 1;
     return element;
   }
 
+  // counts total existance of elements in array
   count() {
     return this.tail - this.head - this.cancelCount;
   }
